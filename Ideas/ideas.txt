@@ -1,0 +1,9 @@
+Sprite system
+Dash forward/back
+Skill tree/diety system
+Passive vs active skills based on diety
+Switching diety has repricusions  
+Knockback/stub from weight of weapon
+Item weight armor
+Quick knives attack fast vs slow axe attacks slow and stuns/Knockback based on percentage damage dealt
+Crafting system

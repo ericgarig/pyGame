@@ -1,0 +1,3 @@
+converting py to standalone
+- get ‘Py2App’
+- watch http://www.youtube.com/watch?v=aa7uZuFBgK8&list=PLDV1Zeh2NRsB1l23YFY137LtPcstXKyuQ&feature=share&index=53

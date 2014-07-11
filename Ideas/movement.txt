@@ -1,0 +1,31 @@
+========================================
+MAP/WORLD
+========================================
+ - side-scroller
+	world moves left/right
+	Jumping onto/falling from  a ledge/platform locks camera as the ‘new ground’
+	‘ground’ is about 2/3 of the screen from the top ( can see above and below )
+
+
+========================================
+Alternative Ideas
+ - Fixed panes
+	screen is fixed, and char moved freely within the window, moving to the edge causes the window to redraw with a new map/ground ( Link’s awakening on GameBoy )
+ - top-view
+	char is fixed in the center and the world moves around ( old-school pokemon )
+
+
+
+
+========================================
+MOVEMENT
+========================================
+ - Keyboard
+	WASD movement
+	QE for utility skills
+	‘modifier key’ when held causes alt controls
+		dodge/fall/rolling
+ - MOUSE
+	left/right buttons for skills ( primary/secondary? )
+	mouse pointer is location of ranged skills
+	
