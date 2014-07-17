@@ -36,6 +36,7 @@ charWidth = 20
 charHeight = 40
 gravity = 1
 maxGravity = 10
+maxJumpAccel = - 10
 minFloor = screenHeight + charHeight/2
 maxWidth = screenWidth # change this later to the max width of the map
 
@@ -105,7 +106,7 @@ while True:
 
 
     #LOGIC
-    char.motion(direction,jumping,fall_through,gravity,maxGravity,minFloor,maxWidth,MapClass.allSprites)
+    char.motion(direction,jumping,fall_through,gravity,maxGravity,maxJumpAccel,minFloor,maxWidth,MapClass.allSprites)
 
     #DRAW
     screen.fill(Black)

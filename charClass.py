@@ -9,8 +9,8 @@ from baseClass import *
 
 class CharClass(BaseClass):
     allSprites = pygame.sprite.Group()
-    velx = 5
-    velY = 1
+    vel_X = 5
+    vel_Y = 1
 
     #base constructor
     def __init__(self,x,y,height,width,color):
@@ -32,79 +32,71 @@ class CharClass(BaseClass):
 
     # returns an array of:
     #     [bottom, left, right, ceiling, isFloorSolid]
-    def can_move(self, wallList, minFloor,maxWidth):
-        can_move = [minFloor,0,maxWidth,0,1]
+    def movementArray(self, wallList, minFloor,maxWidth):
+        movementArray = [minFloor,0,maxWidth,0,1]
 
         for wall in wallList:
         	# floor
             if ( self.widthCenter >= wall.rect.x and 
             	    self.widthCenter <= wall.rect.right and 
             	    self.rect.bottom <= wall.rect.y and
-                    wall.rect.y < can_move[0] ):
-                can_move[0] = wall.rect.y
+                    wall.rect.y < movementArray[0] ):
+                movementArray[0] = wall.rect.y
                 if wall.type == 'solid':
-                    can_move[4] = 1
+                    movementArray[4] = 1
                 else:
-                    can_move[4] = 0
+                    movementArray[4] = 0
 
             # ceiling
             if ( self.rect.right >= wall.rect.x and
                     self.rect.x <= wall.rect.right and
                     self.rect.y >= wall.rect.bottom and
-                    wall.rect.bottom > can_move[3] and
+                    wall.rect.bottom > movementArray[3] and
                     wall.type == 'solid' ):
-                can_move[3] = wall.rect.bottom
+                movementArray[3] = wall.rect.bottom
 
             # walls
             if ( self.rect.y < wall.rect.bottom and
             	    self.rect.bottom > wall.rect.y ):
                 # left wall
                 if ( wall.rect.right <= self.rect.x and 
-                	    wall.rect.right > can_move[1] ):
-                	can_move[1] = wall.rect.right
+                	    wall.rect.right > movementArray[1] ):
+                	movementArray[1] = wall.rect.right
                 # right wall
                 if (wall.rect.x >= self.rect.right and 
-                	    wall.rect.x < can_move[2] ):
-                    can_move[2] = wall.rect.x
-        return can_move
+                	    wall.rect.x < movementArray[2] ):
+                    movementArray[2] = wall.rect.x
+        return movementArray
 
 
-    def motion (self,direction,jumping,fall_through,gravity,maxGravity,minFloor,maxWidth,wallList):
+    def motion (self,direction,jumping,fall_through,gravity,maxGravity,maxJumpAccel,minFloor,maxWidth,wallList):
     	moveArray = []
-    	moveArray = self.can_move(wallList,minFloor,maxWidth)
+    	moveArray = self.movementArray(wallList,minFloor,maxWidth)
 
         #print self.rect, moveArray
 
         #left/right
         if direction == 'Left' and moveArray[1] < self.rect.x:
         	for wall in wallList:
-        	    wall.rect.x += CharClass.velx   # move all walls right
+        	    wall.rect.x += CharClass.vel_X   # move all walls right
         elif direction == 'Right' and moveArray[2] > self.rect.x + self.rect.width:
         	for wall in wallList:
-        	    wall.rect.x -= CharClass.velx   # move all walls left
+        	    wall.rect.x -= CharClass.vel_X   # move all walls left
 
         # jumping/falling
         if jumping:
             if self.rect.y - gravity >= moveArray[3]:
                 self.rect.y -= gravity
         else:
-            if self.velY < maxGravity:
-                self.velY += gravity
-            fall_location = self.rect.y + self.velY
-            if ( moveArray[0] - self.rect.bottom ) < fall_location and moveArray[0] <> self.rect.bottom:
-                fall_location = moveArray[0] - self.rect.bottom
-            # nothing below
-            if fall_location + self.height <= moveArray[0]:
-                self.rect.y = fall_location
-            # there is a hollow floor, and user hit down
+            if self.vel_Y < maxGravity:
+                self.vel_Y += gravity
+
+            if (( moveArray[0] - self.rect.bottom ) > self.vel_Y and 
+                    self.rect.y + self.vel_Y <= moveArray[0] ):
+                self.rect.y = self.rect.y + self.vel_Y
             elif fall_through == True and moveArray[4] == 0:
-                self.rect.y = fall_location        
-
-    
-            
-
-    
-
+                self.rect.y = self.rect.y + self.vel_Y
+        #print self.rect, moveArray, gravity, self.vel_Y
 
 
 
