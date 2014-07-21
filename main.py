@@ -60,7 +60,7 @@ fpsTime = pygame.time.Clock()
 # map - look into having a text file of params
 #       then looping over each one and creating a new wall
 floor = MapClass(0,500,10,100)
-floor2 = MapClass(100,500,10,100,HollowWall,'hollow')
+floor2 = MapClass(100,500,10,200,HollowWall,'hollow')
 #floor3 = MapClass(500,400,100,10,Gray)
 #floor4 = MapClass(0,0,500,10,Gray)
 

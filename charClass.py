@@ -11,6 +11,7 @@ class CharClass(BaseClass):
     allSprites = pygame.sprite.Group()
     vel_X = 5
     vel_Y = 1
+    isFalling = True
 
     #base constructor
     def __init__(self,x,y,height,width,color):
@@ -25,8 +26,8 @@ class CharClass(BaseClass):
         self.rect.y = y
         self.width = width
         self.height = height
-        self.bottom = x + height
-        self.right = y + width
+        self.bottom = y + height
+        self.right = x + width
         self.widthCenter = x + width / 2
 
 
@@ -84,19 +85,26 @@ class CharClass(BaseClass):
         	    wall.rect.x -= CharClass.vel_X   # move all walls left
 
         # jumping/falling
-        if jumping:
+        if jumping and not self.isFalling:
             if self.rect.y - gravity >= moveArray[3]:
                 self.rect.y -= gravity
+            self.vel_Y = maxJumpAccel
         else:
+            # increase velocity due to gravity
             if self.vel_Y < maxGravity:
                 self.vel_Y += gravity
 
-            if (( moveArray[0] - self.rect.bottom ) > self.vel_Y and 
-                    self.rect.y + self.vel_Y <= moveArray[0] ):
+            #while free-falling
+            if self.rect.bottom < moveArray[0]:
+                # fall distance less than falling, so set it what is left
+                if ( moveArray[0] - self.rect.bottom ) < self.vel_Y:
+                    self.vel_Y = moveArray[0] - self.rect.bottom
                 self.rect.y = self.rect.y + self.vel_Y
             elif fall_through == True and moveArray[4] == 0:
                 self.rect.y = self.rect.y + self.vel_Y
-        #print self.rect, moveArray, gravity, self.vel_Y
+            elif self.rect.bottom == moveArray[0]:
+                self.isFalling = False
+        #print self.rect, moveArray[0], gravity, self.vel_Y, self.rect.bottom#self.rect, moveArray, gravity, self.vel_Y
 
 
 
