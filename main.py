@@ -36,7 +36,7 @@ charWidth = 20
 charHeight = 40
 gravity = 1
 maxGravity = 10
-maxJumpAccel = - 10
+maxJumpAccel = - 15
 minFloor = screenHeight + charHeight/2
 maxWidth = screenWidth # change this later to the max width of the map
 
@@ -82,6 +82,10 @@ while True:
         # ADD CMD + Q to quit
 
         keys = pygame.key.get_pressed()
+
+        if keys[K_q]:
+            pygame.quit()
+            sys.exit
 
         if keys[K_a]:
             # Left

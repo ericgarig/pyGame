@@ -85,26 +85,37 @@ class CharClass(BaseClass):
         	    wall.rect.x -= CharClass.vel_X   # move all walls left
 
         # jumping/falling
-        if jumping and not self.isFalling:
+        if jumping:
             if self.rect.y - gravity >= moveArray[3]:
                 self.rect.y -= gravity
-            self.vel_Y = maxJumpAccel
+            if not self.isFalling:
+                self.vel_Y = maxJumpAccel
+                self.isFalling = True
         else:
             # increase velocity due to gravity
-            if self.vel_Y < maxGravity:
-                self.vel_Y += gravity
+            if self.vel_Y < 0:
+                self.vel_Y = 0
+        if self.vel_Y < maxGravity:
+            self.vel_Y += gravity
 
-            #while free-falling
-            if self.rect.bottom < moveArray[0]:
-                # fall distance less than falling, so set it what is left
-                if ( moveArray[0] - self.rect.bottom ) < self.vel_Y:
-                    self.vel_Y = moveArray[0] - self.rect.bottom
-                self.rect.y = self.rect.y + self.vel_Y
-            elif fall_through == True and moveArray[4] == 0:
-                self.rect.y = self.rect.y + self.vel_Y
-            elif self.rect.bottom == moveArray[0]:
-                self.isFalling = False
-        #print self.rect, moveArray[0], gravity, self.vel_Y, self.rect.bottom#self.rect, moveArray, gravity, self.vel_Y
+        #while free-falling
+        if self.rect.bottom < moveArray[0]:
+            # fall distance less than falling, so set it what is left
+            if ( moveArray[0] - self.rect.bottom ) < self.vel_Y:
+                self.vel_Y = moveArray[0] - self.rect.bottom
+            self.rect.y = self.rect.y + self.vel_Y
+        elif fall_through == True and moveArray[4] == 0:
+            self.rect.y = self.rect.y + self.vel_Y
+        if self.rect.bottom == moveArray[0]:
+            self.isFalling = False
+        print (self.rect,
+              #'  jump:',  jumping,
+              '  fall:', self.isFalling,
+              '  floor:', moveArray[0], 
+              #'  g:', gravity, 
+              #'  vel:', self.vel_Y, 
+              '  bot:', self.rect.bottom
+              )
 
 
 
