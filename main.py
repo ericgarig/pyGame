@@ -69,6 +69,8 @@ char = CharClass((screenWidth + charWidth)/2,10,charHeight,charWidth,Blue)
 
 text = texts("hi")
 
+#bot = floor.absBot()
+
 
 #Main loop
 while True:
@@ -110,7 +112,7 @@ while True:
 
 
     #LOGIC
-    char.motion(direction,jumping,fall_through,gravity,maxGravity,maxJumpAccel,minFloor,maxWidth,MapClass.allSprites)
+    char.motion(direction,jumping,fall_through,gravity,maxGravity,maxJumpAccel,minFloor,maxWidth,screenWidth,MapClass.allSprites)
 
     #DRAW
     screen.fill(Black)

@@ -28,7 +28,7 @@ class CharClass(BaseClass):
         self.height = height
         self.bottom = y + height
         self.right = x + width
-        self.widthCenter = x + width / 2
+        self.widthCenter = x + self.width/2
 
 
     # returns an array of:
@@ -70,19 +70,16 @@ class CharClass(BaseClass):
         return movementArray
 
 
-    def motion (self,direction,jumping,fall_through,gravity,maxGravity,maxJumpAccel,minFloor,maxWidth,wallList):
+    def motion (self,direction,jumping,fall_through,gravity,maxGravity,maxJumpAccel,minFloor,maxWidth,screenWidth,wallList):
     	moveArray = []
     	moveArray = self.movementArray(wallList,minFloor,maxWidth)
-
-        #print self.rect, moveArray
-
         #left/right
         if direction == 'Left' and moveArray[1] < self.rect.x:
         	for wall in wallList:
-        	    wall.rect.x += CharClass.vel_X   # move all walls right
+        	    wall.rect.x += self.vel_X   # move all walls right
         elif direction == 'Right' and moveArray[2] > self.rect.x + self.rect.width:
         	for wall in wallList:
-        	    wall.rect.x -= CharClass.vel_X   # move all walls left
+        	    wall.rect.x -= self.vel_X   # move all walls left
 
         # jumping/falling
         if jumping:
@@ -92,13 +89,12 @@ class CharClass(BaseClass):
                 self.vel_Y = maxJumpAccel
                 self.isFalling = True
         else:
-            # increase velocity due to gravity
             if self.vel_Y < 0:
                 self.vel_Y = 0
         if self.vel_Y < maxGravity:
             self.vel_Y += gravity
 
-        #while free-falling
+        # free-falling
         if self.rect.bottom < moveArray[0]:
             # fall distance less than falling, so set it what is left
             if ( moveArray[0] - self.rect.bottom ) < self.vel_Y:
@@ -108,14 +104,15 @@ class CharClass(BaseClass):
             self.rect.y = self.rect.y + self.vel_Y
         if self.rect.bottom == moveArray[0]:
             self.isFalling = False
-        print (self.rect,
-              #'  jump:',  jumping,
-              '  fall:', self.isFalling,
-              '  floor:', moveArray[0], 
-              #'  g:', gravity, 
-              #'  vel:', self.vel_Y, 
-              '  bot:', self.rect.bottom
-              )
+        # print ( self.widthCenter, (screenWidth/2)
+        #       #  self.rect,
+        #       #'  jump:',  jumping,
+        #       #'  fall:', self.isFalling,
+        #       #'  floor:', moveArray[0], 
+        #       #'  g:', gravity, 
+        #       #'  vel:', self.vel_Y, 
+        #       #'  bot:', self.rect.bottom
+        #       )
 
 
 
