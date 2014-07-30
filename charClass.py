@@ -28,58 +28,68 @@ class CharClass(BaseClass):
         self.height = height
         self.bottom = y + height
         self.right = x + width
-        self.widthCenter = x + self.width/2
+        #self.widthCenter = x + self.width/2
 
 
     # returns an array of:
-    #     [bottom, left, right, ceiling, isFloorSolid]
+    #     [floor, left, right, ceiling, isFloorSolid]
     def movementArray(self, wallList, minFloor,maxWidth):
         movementArray = [minFloor,0,maxWidth,0,1]
 
         for wall in wallList:
-        	# floor
-            if ( self.widthCenter >= wall.rect.x and 
-            	    self.widthCenter <= wall.rect.right and 
-            	    self.rect.bottom <= wall.rect.y and
-                    wall.rect.y < movementArray[0] ):
-                movementArray[0] = wall.rect.y
-                if wall.type == 'solid':
-                    movementArray[4] = 1
-                else:
-                    movementArray[4] = 0
+            # floor
+            # if ( self.widthCenter >= wall.rect.x and 
+            #       self.widthCenter <= wall.rect.right and 
+            #       self.rect.bottom <= wall.rect.y and
+            #         wall.rect.y < movementArray[0] ):
+            #     movementArray[0] = wall.rect.y
+            #     if wall.type == 'solid':
+            #         movementArray[4] = 1
+            #     else:
+            #         movementArray[4] = 0
 
-            # ceiling
+            # floor/ceiling
             if ( self.rect.right >= wall.rect.x and
-                    self.rect.x <= wall.rect.right and
-                    self.rect.y >= wall.rect.bottom and
-                    wall.rect.bottom > movementArray[3] and
-                    wall.type == 'solid' ):
-                movementArray[3] = wall.rect.bottom
+                    self.rect.x <= wall.rect.right ):
+                # floor
+                if ( self.rect.bottom <= wall.rect.y and
+                            wall.rect.y < movementArray[0] ):
+                    movementArray[0] = wall.rect.y
+                    if wall.type == 'solid':
+                        movementArray[4] = 1
+                    else:
+                        movementArray[4] = 0
+                # ceiling
+                elif ( self.rect.y >= wall.rect.bottom and
+                        wall.rect.bottom > movementArray[3] and
+                        wall.type == 'solid' ):
+                    movementArray[3] = wall.rect.bottom
 
             # walls
             if ( self.rect.y < wall.rect.bottom and
-            	    self.rect.bottom > wall.rect.y ):
+                    self.rect.bottom > wall.rect.y ):
                 # left wall
                 if ( wall.rect.right <= self.rect.x and 
-                	    wall.rect.right > movementArray[1] ):
-                	movementArray[1] = wall.rect.right
+                        wall.rect.right > movementArray[1] ):
+                    movementArray[1] = wall.rect.right
                 # right wall
                 if (wall.rect.x >= self.rect.right and 
-                	    wall.rect.x < movementArray[2] ):
+                        wall.rect.x < movementArray[2] ):
                     movementArray[2] = wall.rect.x
+        #print self.rect, movementArray
         return movementArray
 
 
     def motion (self,direction,jumping,fall_through,gravity,maxGravity,maxJumpAccel,minFloor,maxWidth,screenWidth,wallList):
-    	moveArray = []
-    	moveArray = self.movementArray(wallList,minFloor,maxWidth)
+        moveArray = []
+        moveArray = self.movementArray(wallList,minFloor,maxWidth)
         #left/right
         if direction == 'Left' and moveArray[1] < self.rect.x:
-        	for wall in wallList:
-        	    wall.rect.x += self.vel_X   # move all walls right
+            for wall in wallList:
+                wall.rect.x += self.vel_X   # move all walls right
         elif direction == 'Right' and moveArray[2] > self.rect.x + self.rect.width:
-        	for wall in wallList:
-        	    wall.rect.x -= self.vel_X   # move all walls left
+            for wall in wallList:
+                wall.rect.x -= self.vel_X   # move all walls left
 
         # jumping/falling
         if jumping:
@@ -91,6 +101,8 @@ class CharClass(BaseClass):
         else:
             if self.vel_Y < 0:
                 self.vel_Y = 0
+
+        # increase vel due to gravity
         if self.vel_Y < maxGravity:
             self.vel_Y += gravity
 
@@ -102,17 +114,10 @@ class CharClass(BaseClass):
             self.rect.y = self.rect.y + self.vel_Y
         elif fall_through == True and moveArray[4] == 0:
             self.rect.y = self.rect.y + self.vel_Y
+            self.isFalling = True
         if self.rect.bottom == moveArray[0]:
             self.isFalling = False
-        # print ( self.widthCenter, (screenWidth/2)
-        #       #  self.rect,
-        #       #'  jump:',  jumping,
-        #       #'  fall:', self.isFalling,
-        #       #'  floor:', moveArray[0], 
-        #       #'  g:', gravity, 
-        #       #'  vel:', self.vel_Y, 
-        #       #'  bot:', self.rect.bottom
-        #       )
+       # print 
 
 
 

@@ -27,7 +27,6 @@ def texts(score):
 
 
 
-
 #Constants
 FPS = 30
 screenWidth = 800
@@ -57,12 +56,15 @@ screen = pygame.display.set_mode((screenWidth, screenHeight))
 pygame.display.set_caption('Testing This All')
 fpsTime = pygame.time.Clock()
 
-# map - look into having a text file of params
-#       then looping over each one and creating a new wall
-floor = MapClass(0,500,10,100)
-floor2 = MapClass(100,500,10,200,HollowWall,'hollow')
-#floor3 = MapClass(500,400,100,10,Gray)
-#floor4 = MapClass(0,0,500,10,Gray)
+
+#(x,y,depth,width)
+wall01 = MapClass(0,0,minFloor,10)
+
+#(x,y,depth,width)
+floor01 = MapClass(10,500,minFloor-500,90)
+floor02 = MapClass(100,500,10,200,HollowWall,'hollow')
+floor03 = MapClass(300,450,minFloor-450,200)
+
 
 # Char
 char = CharClass((screenWidth + charWidth)/2,10,charHeight,charWidth,Blue)
@@ -77,11 +79,17 @@ while True:
 
     #EVENTS
     for event in pygame.event.get():
+
+        #print event
+
+        # hit the 'x' in the top left corner
         if event.type == pygame.QUIT:
             # click red 'x'
             pygame.quit()
             sys.exit
         # ADD CMD + Q to quit
+        # ADD DIED
+        # ADD RESET
 
         keys = pygame.key.get_pressed()
 
@@ -112,6 +120,8 @@ while True:
 
 
     #LOGIC
+    # if char.rect.bottom == minFloor:
+    #     pygame.event.Event(USEREVENT, code='DIED', )
     char.motion(direction,jumping,fall_through,gravity,maxGravity,maxJumpAccel,minFloor,maxWidth,screenWidth,MapClass.allSprites)
 
     #DRAW
