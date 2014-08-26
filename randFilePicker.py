@@ -1,6 +1,14 @@
+# 2014-08-20 ( eshagdar )
+# randomly pick a file from a specified dir, and execute it.
+
 import os
 import random
 
-files = os.listdir('/Users/eshagdar/Desktop/files')
+my_dir = os.path.dirname(os.path.realpath(__file__))
+files = os.listdir(my_dir + '/Maps')
 index = random.randrange(0,len(files))
-print files[index]
+the_file = 'maps/' + files[index]
+subLocals = dict()
+execfile(the_file, dict(), subLocals)
+
+print the_file, subLocals['script_result']
