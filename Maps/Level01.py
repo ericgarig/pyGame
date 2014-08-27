@@ -1,6 +1,15 @@
+import sys
+
+sys.path.insert(0, '../')
+
+from mapClass import *
+
+
 def main():
-	a = 1
-	return a
+	print '----starting Level01'
+	floor04 = MapClass(10,500,400,90)
+	print '---', floor04.rect
+	return floor04
 
 
 script_result = main()

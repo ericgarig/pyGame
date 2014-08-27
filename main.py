@@ -69,9 +69,8 @@ floor03 = MapClass(300,450,minFloor-450,200)
 # Char
 char = CharClass((screenWidth + charWidth)/2,10,charHeight,charWidth,Blue)
 
-text = texts("hi")
-
-#bot = floor.absBot()
+# Text
+#text = texts("hi")
 
 
 #Main loop

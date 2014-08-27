@@ -3,12 +3,13 @@
 
 import os
 import random
+#from mapClass import *
 
 my_dir = os.path.dirname(os.path.realpath(__file__))
 files = os.listdir(my_dir + '/Maps')
 index = random.randrange(0,len(files))
-the_file = 'maps/' + files[index]
+the_file = 'maps/' + 'Level01.py'#files[index]
 subLocals = dict()
 execfile(the_file, dict(), subLocals)
 
-print the_file, subLocals['script_result']
+print the_file, subLocals#['script_result']

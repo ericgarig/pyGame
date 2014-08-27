@@ -1,6 +1,6 @@
 # 2014-06-11 ( eshagdar )
 
-"""class that contains all moving characters"""
+"""class that contains all walls"""
 import pygame, sys
 from baseClass import *
 
