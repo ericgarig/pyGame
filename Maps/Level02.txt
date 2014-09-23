@@ -1,0 +1,6 @@
+# 2014-09-18
+# test file for import
+
+from mapClass import *
+
+wall00 = MapClass (20,20,50,50)
