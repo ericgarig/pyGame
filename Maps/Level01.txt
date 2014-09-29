@@ -1,7 +1,14 @@
 # 2014-09-18
-# test file for import
+# basic map file
 
 from mapClass import *
 
-wall00 = MapClass (10,10,100,100)
-wall01 = MapClass (30,30,200,200)
+#(x,y,depth,width)
+
+# basic left-most wall
+wall01 = MapClass(0,0,minFloor,10)
+
+# map of the level
+floor01 = MapClass(10,500,minFloor-500,90)
+floor02 = MapClass(100,500,10,200,HollowWall,'hollow')
+floor03 = MapClass(300,450,minFloor-450,200)

@@ -10,7 +10,7 @@
    
 """
 
-import pygame, sys
+import pygame, sys, os, random
 from pygame.locals import *
 from baseClass import *
 from charClass import *
@@ -19,11 +19,11 @@ import Text
 """this is the main file to run """
 
 
-
-def texts(score):
-    font=pygame.font.Font(None,30)
-    scoretext=font.render("Score:"+str(score), 1,(0,0,255))
-    screen.blit(scoretext, (500, 457))
+# """not sure I need this anymore. check later 2014-09-29"""
+# def texts(score):
+#     font=pygame.font.Font(None,30)
+#     scoretext=font.render("Score:"+str(score), 1,(0,0,255))
+#     screen.blit(scoretext, (500, 457))
 
 
 
@@ -57,13 +57,29 @@ pygame.display.set_caption('Testing This All')
 fpsTime = pygame.time.Clock()
 
 
-#(x,y,depth,width)
-wall01 = MapClass(0,0,minFloor,10)
 
-#(x,y,depth,width)
-floor01 = MapClass(10,500,minFloor-500,90)
-floor02 = MapClass(100,500,10,200,HollowWall,'hollow')
-floor03 = MapClass(300,450,minFloor-450,200)
+
+
+
+""" Map Setup """
+
+# 2014-09-29 ( eshagdar ) - use a map file
+# #(x,y,depth,width)
+# wall01 = MapClass(0,0,minFloor,10)
+
+# #(x,y,depth,width)
+# floor01 = MapClass(10,500,minFloor-500,90)
+# floor02 = MapClass(100,500,10,200,HollowWall,'hollow')
+# floor03 = MapClass(300,450,minFloor-450,200)
+
+
+files = os.listdir(os.getcwd() + '/Maps')
+index = random.randrange(1,len(files))   # do not include the .DS_Store file
+
+# with open("Maps/"+files[index]) as file:    # Use file to refer to the file object
+with open("Maps/Level01.txt") as file:    # Use file to refer to the file object
+    data = file.read()
+    exec( data )
 
 
 # Char
