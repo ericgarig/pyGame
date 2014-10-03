@@ -79,7 +79,8 @@ index = random.randrange(1,len(files))   # do not include the .DS_Store file
 # with open("Maps/"+files[index]) as file:    # Use file to refer to the file object
 with open("Maps/Level01.txt") as file:    # Use file to refer to the file object
     data = file.read()
-    exec( data )
+    exec(data)
+exit
 
 
 # Char
