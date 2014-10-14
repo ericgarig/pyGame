@@ -31,7 +31,6 @@ class CharClass(BaseClass):
         self.height = height
         self.bottom = y + height
         self.right = x + width
-        #self.widthCenter = x + self.width/2
 
 
     # returns an array of:
@@ -40,16 +39,6 @@ class CharClass(BaseClass):
         movementArray = [minFloor,0,maxWidth,0,1]
 
         for wall in wallList:
-            # floor
-            # if ( self.widthCenter >= wall.rect.x and 
-            #       self.widthCenter <= wall.rect.right and 
-            #       self.rect.bottom <= wall.rect.y and
-            #         wall.rect.y < movementArray[0] ):
-            #     movementArray[0] = wall.rect.y
-            #     if wall.type == 'solid':
-            #         movementArray[4] = 1
-            #     else:
-            #         movementArray[4] = 0
 
             # floor/ceiling
             if ( self.rect.right >= wall.rect.x and
@@ -120,7 +109,7 @@ class CharClass(BaseClass):
             self.isFalling = True
         if self.rect.bottom == moveArray[0]:
             self.isFalling = False
-       # print 
+        print self.rect.x, self.rect.y
 
     def isDead(self,screen,DeathPos,backGroundColor):
         if self.rect.bottom >= DeathPos:

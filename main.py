@@ -70,11 +70,6 @@ char = CharClass((screenWidth + charWidth)/2,10,charHeight,charWidth,Blue)
 
 
 
-"""Text"""
-# texts = TextClass.text_to_screen(screen, "hello", 100, 100, size = 25, color = (0, 255, 255), font_type = 'monospace' )
-
-
-
 """Main loop"""
 while True:
 
@@ -135,7 +130,6 @@ while True:
 
     #Clock
     fpsTime.tick(FPS)
-
 
 
 

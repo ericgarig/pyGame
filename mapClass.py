@@ -3,6 +3,7 @@
 """class that contains all walls"""
 import pygame, sys
 from baseClass import *
+import Text
 
 
 class MapClass(BaseClass):
