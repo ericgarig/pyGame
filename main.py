@@ -1,33 +1,33 @@
-# 2014-06-10 ( eshagdar )
+#!/usr/bin/env python
 
+"""
+to do:
+- dead state
 
-""" things to do:
-
-    gravity should not be Constant
-    - along with that, jump shouldn't be either
-    - not should you be able to jump unless you land - check velY
-    moving the map up/down when on a platform/falling from 'base height'
-   
 """
 
-import pygame, sys, os, random
+
+
+"""main file of side-scroller game"""
+
+__author__ = "Erik Shagdar"
+__version__ = "1.0.1"
+__email__ = "erik.shagdar@gmail.com"
+__status__ = "Development"
+
+
+import pygame
+import sys
+import os
+import random
 from pygame.locals import *
 from baseClass import *
 from charClass import *
 from mapClass import *
-import Text 
-"""this is the main file to run """
-
-
-# """not sure I need this anymore. check later 2014-09-29"""
-# def texts(score):
-#     font=pygame.font.Font(None,30)
-#     scoretext=font.render("Score:"+str(score), 1,(0,0,255))
-#     screen.blit(scoretext, (500, 457))
 
 
 
-#Constants
+"""Constants"""
 FPS = 30
 screenWidth = 800
 screenHeight = 600
@@ -39,58 +39,50 @@ maxJumpAccel = - 15
 minFloor = screenHeight + charHeight/2
 maxWidth = screenWidth # change this later to the max width of the map
 
+
 #Colors
 Black = (0,0,0)
 Gray = (220,220,220)
 HollowWall = (130,130,130)
-#Red = (220,0,0)
 Blue = (0,0,220)
 
 
-#init
+
+"""init"""
 pygame.init()
 
 
-#setup
+
+"""setup"""
 screen = pygame.display.set_mode((screenWidth, screenHeight))
 pygame.display.set_caption('Testing This All')
 fpsTime = pygame.time.Clock()
 
 
 
+#Map Setup
 
-
-
-""" Map Setup """
-
-# 2014-09-29 ( eshagdar ) - use a map file
-# #(x,y,depth,width)
-# wall01 = MapClass(0,0,minFloor,10)
-
-# #(x,y,depth,width)
-# floor01 = MapClass(10,500,minFloor-500,90)
-# floor02 = MapClass(100,500,10,200,HollowWall,'hollow')
-# floor03 = MapClass(300,450,minFloor-450,200)
-
-
-files = os.listdir(os.getcwd() + '/Maps')
-index = random.randrange(1,len(files))   # do not include the .DS_Store file
-
+"""enable this when there are multiple maps, for now just specify file"""
+# files = os.listdir(os.getcwd() + '/Maps')
+# index = random.randrange(1,len(files))   # do not include the .DS_Store file
 # with open("Maps/"+files[index]) as file:    # Use file to refer to the file object
+
 with open("Maps/Level01.txt") as file:    # Use file to refer to the file object
     data = file.read()
     exec(data)
-exit
 
 
 # Char
 char = CharClass((screenWidth + charWidth)/2,10,charHeight,charWidth,Blue)
 
-# Text
-#text = texts("hi")
 
 
-#Main loop
+"""Text"""
+# texts = TextClass.text_to_screen(screen, "hello", 100, 100, size = 25, color = (0, 255, 255), font_type = 'monospace' )
+
+
+
+"""Main loop"""
 while True:
 
     #EVENTS
@@ -136,15 +128,17 @@ while True:
 
 
     #LOGIC
-    # if char.rect.bottom == minFloor:
-    #     pygame.event.Event(USEREVENT, code='DIED', )
+    if char.isDead(screen,minFloor,Black):
+        break
     char.motion(direction,jumping,fall_through,gravity,maxGravity,maxJumpAccel,minFloor,maxWidth,screenWidth,MapClass.allSprites)
+
 
     #DRAW
     screen.fill(Black)
     BaseClass.allSprites.draw(screen)
-    #Text.text_to_screen(screen, "hello", 10, 10,10,(250,40,43))
+    Text.text_to_screen(screen, "Under Development",10,screenHeight-30,20,(255,0,0))
     pygame.display.update()
+    
 
     #Clock
     fpsTime.tick(FPS)

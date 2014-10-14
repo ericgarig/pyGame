@@ -4,6 +4,9 @@
 
 import pygame, sys
 from baseClass import *
+from time import sleep
+import Text
+
 
 
 
@@ -119,6 +122,14 @@ class CharClass(BaseClass):
             self.isFalling = False
        # print 
 
+    def isDead(self,screen,DeathPos,backGroundColor):
+        if self.rect.bottom >= DeathPos:
+            screen.fill(backGroundColor)
+            Text.text_to_screen(screen, "You fell to your death",10,10,100,(255,0,0))
+            Text.text_to_screen(screen, "Try again",10,200,100,(255,0,0))
+            pygame.display.update()
+            sleep(2)
+            return True
 
 
 
