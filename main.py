@@ -1,12 +1,5 @@
 #!/usr/bin/env python
 
-"""
-to do:
-- dead state
-
-"""
-
-
 
 """main file of side-scroller game"""
 
